@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) //argc # of items in command include prgram nam
 	if (argc != 2)
 	{
 		cout << "Usage: " << argv[0] << " <number of players>" << endl;
-		retun 1;
+		return 1;
 	}
 	//atoi converts text to integer (ASCII to Integer)
 	int number_of_players = atoi(argv[1]);
@@ -39,14 +39,14 @@ int main(int argc, char* argv[]) //argc # of items in command include prgram nam
 		return 1;
 	}
 	//store first frame of each players list
-	Bowling_Frame** players = new Bowling_Frame*[numbe_of_players];
+	Bowling_Frame** players = new Bowling_Frame*[number_of_players];
 	
 	// replaced (make frames) to make 10 frames for each player by using loops instead
 	for (int player = 0; player < number_of_players; player++)
 		{
 			//save first frame in array
 			players[player] = new Bowling_Frame(1);
-			Bowling_Frame* previous = players[player0;
+			Bowling_Frame* previous = players[player];
 			//make remaing frames then link together
 			for (int frame = 2; frame <= 10; frame++)
 				{
