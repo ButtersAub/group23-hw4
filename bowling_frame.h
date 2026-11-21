@@ -36,6 +36,8 @@ class Bowling_Frame
 		void score1(int score);
 		int score2();
 		void score2(int score);
+		//Butterfield added to return final frame bonus roll
+		int score3();
 		bool strike();
 		void strike(bool value);
 		bool spare();
