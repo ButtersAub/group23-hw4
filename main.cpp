@@ -84,7 +84,7 @@ int main(int argc, char* argv[]) //argc # of items in command include prgram nam
 				{
 					cout << " Score 3: " << traverse->score3() << endl;
 				}
-					<< " Frame total: " << traverse->frame_score() << endl;
+					cout << " Frame total: " << traverse->frame_score() << endl;
 
 		traverse = traverse->next_frame();
 	}
