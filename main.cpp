@@ -41,18 +41,23 @@ int main(int argc, char* argv[]) //argc # of items in command include prgram nam
 	//store first frame of each players list
 	Bowling_Frame** players = new Bowling_Frame*[numbe_of_players];
 	
-	//make frames
-	Bowling_Frame * f1 = new Bowling_Frame(1);
-	Bowling_Frame * f2 = new Bowling_Frame(2);
-	Bowling_Frame * f3 = new Bowling_Frame(3);
-
-	//link frames together
-	f1->next_frame(f2);
-
-	f2->next_frame(f3);
-	f2->prev_frame(f1);
-
-	f3->prev_frame(f2);	
+	// replaced (make frames) to make 10 frames for each player by using loops instead
+	for (int player = 0; player < number_of_players; player++)
+		{
+			//save first frame in array
+			players[player] = new Bowling_Frame(1);
+			Bowling_Frame* previous = players[player0;
+			//make remaing frames then link together
+			for (int frame = 2; frame <= 10; frame++)
+				{
+					Bowling_Frame* current = new Bowling_Frame(frame);
+					//Link forward to next frame
+					previous->next_frame(current);
+					//link backwards to previous grame
+					current->prev_frame(previous);
+					previous = current;
+				}
+		}
 
 	//set frame scores	
 	f1->update_scores();
