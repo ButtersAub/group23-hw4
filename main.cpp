@@ -78,7 +78,12 @@ int main(int argc, char* argv[]) //argc # of items in command include prgram nam
 			{
 				cout << "Frame " << traverse->frame_num() << ": " << endl
 					<< " Score 1: " << traverse->score1() << endl
-					<< " Score 2: " << traverse->score2() << endl
+					<< " Score 2: " << traverse->score2() << endl;
+				//show third roll only when final grame earns it
+				if (traverse->frame_num() == 10 && (traverse->strike() || traverse->spare()))
+				{
+					cout << " Score 3: " << traverse->score3() << endl;
+				}
 					<< " Frame total: " << traverse->frame_score() << endl;
 
 		traverse = traverse->next_frame();
