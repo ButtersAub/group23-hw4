@@ -8,6 +8,7 @@ Bowling_Frame::Bowling_Frame(int fnum)
 {
 	score1_ = 0;
 	score2_ = 0;
+	score3_ = 0;
 	strike_ = false;
 	spare_ = false;
 	frame_num_ = fnum;
@@ -16,6 +17,9 @@ Bowling_Frame::Bowling_Frame(int fnum)
 	next_frame_ = NULL;
 	prev_frame_ = NULL;
 
+	roll_one_ = false;	
+	roll_two_ = false;
+	roll_three_ = false;
 }
 
 Bowling_Frame::~Bowling_Frame()
@@ -54,26 +58,88 @@ int Bowling_Frame::frame_score()
 
 void Bowling_Frame::update_scores()
 {
-	std::uniform_int_distribution<std::mt19937::result_type> dist10(0, 10);
+    std::uniform_int_distribution<std::mt19937::result_type> dist10(0, 10);
 
-	if (!roll_one_)
-	{
-		score1_ = dist10(rng);
-		roll_one_ = true;
+    if (frame_num_ == 10)
+    {
+        if (!roll_one_)
+        {
+            score1_ = dist10(rng);
+            roll_one_ = true;
 
-		if(score1_ == 10) strike_ = true; 
-	}
-	else if ( !strike_ && !roll_two_ ) 	
-	{
-		std::uniform_int_distribution<std::mt19937::result_type> distX(0,10 - score1_);
-		score2_ = distX(rng); 
-		roll_two_ = true;
+            if (score1_ == 10)
+                strike_ = true;
+        }
+        else if (strike_ && !roll_two_)
+        {
+            score2_ = dist10(rng);
+            roll_two_ = true;
+        }
+        else if ((strike_ || spare_) && !roll_three_)
+        {
+            if (strike_ && score2_ != 10)
+            {
+                std::uniform_int_distribution<std::mt19937::result_type> distX(0, 10 - score2_);
+                score3_ = distX(rng);
+            }
+            else
+                score3_ = dist10(rng);
 
-		if ((score1_ + score2_) == 10) spare_ = true;
-	}
-	else if (next_frame_) 	next_frame_->update_scores();
+            roll_three_ = true;
+        }
+        else if (!strike_ && !roll_two_)
+        {
+            std::uniform_int_distribution<std::mt19937::result_type> distX(0, 10 - score1_);
+            score2_ = distX(rng);
+            roll_two_ = true;
 
-	frame_score_ = score1_ + score2_;
+            if (score1_ + score2_ == 10)
+                spare_ = true;
+        }
+    }
+    else
+    {
+        if (!roll_one_)
+        {
+            score1_ = dist10(rng);
+            roll_one_ = true;
+
+            if (score1_ == 10)
+                strike_ = true;
+        }
+        else if (!strike_ && !roll_two_)
+        {
+            std::uniform_int_distribution<std::mt19937::result_type> distX(0, 10 - score1_);
+            score2_ = distX(rng);
+            roll_two_ = true;
+
+            if (score1_ + score2_ == 10)
+                spare_ = true;
+        }
+        else if (next_frame_)
+            next_frame_->update_scores();
+    }
+
+    frame_score_ = score1_ + score2_;
+
+    if (frame_num_ == 10)
+        frame_score_ += score3_;
+
+    if (frame_num_ != 10)
+    {
+        if (strike_ && next_frame_)
+        {
+            frame_score_ += next_frame_->score1();
+
+            if (next_frame_->strike() && next_frame_->frame_num() != 10)
+            {
+                if (next_frame_->next_frame())
+                    frame_score_ += next_frame_->next_frame()->score1();
+            }
+            else
+                frame_score_ += next_frame_->score2();
+        }
+        else if (spare_ && next_frame_)
+            frame_score_ += next_frame_->score1();
+    }
 }
-
-

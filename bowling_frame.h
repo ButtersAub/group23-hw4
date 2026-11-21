@@ -7,10 +7,12 @@ class Bowling_Frame
 	private:
 		int score1_;
 		int score2_;
+		int score3_;
 		bool strike_;
 		bool spare_;
 		bool roll_one_;
 		bool roll_two_;
+		bool roll_three_;
 
 		int total_score_;
 		int frame_num_;
