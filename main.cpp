@@ -59,19 +59,14 @@ int main(int argc, char* argv[]) //argc # of items in command include prgram nam
 				}
 		}
 
-	//set frame scores	
-	f1->update_scores();
-	f1->update_scores();
-	cout << "Frame 1 Total: " << current_game_total(f1) << endl;
-
-	f1->update_scores();
-	f1->update_scores();
-	cout << "Frame 1 and 2 Total: " << current_game_total(f1) << endl;
-
-
-	f1->update_scores();
-	f1->update_scores();
-	cout << "Frame 1,2,and 3 Total: " << current_game_total(f1) << endl;
+	//replace(set frame scores) to simulate scores and allow enough callf for final-frame bonus	
+	for (int roll = 0; roll < 22; roll++)
+		{
+			for (int player = 0; player < number_of_players; player++)
+				{
+					players[player]->update_scores();
+				}
+		}
 
 	//print values
 	cout << "Frame " << f1->frame_num() << ": " << endl
