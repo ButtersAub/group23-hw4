@@ -68,29 +68,21 @@ int main(int argc, char* argv[]) //argc # of items in command include prgram nam
 				}
 		}
 
-	//print values
-	cout << "Frame " << f1->frame_num() << ": " << endl
-		 << " Score 1: " << f1->score1() << endl
-		 << " Score 2: " << f1->score2() << endl;
-
-	cout << "Frame " << f2->frame_num() << ": " << endl
-	     << " Score 1: " << f2->score1() << endl
-		 << " Score 2: " << f2->score2() << endl;
-
-	cout << "Frame " << f3->frame_num() << ": " << endl
-	     << " Score 1: " << f3->score1() << endl
-		 << " Score 2: " << f3->score2() << endl;
-
-	//iterate through linked list and print values
-	Bowling_Frame * traverse = f1;
-	
-	while(traverse)
-	{
-		cout << "Frame " << traverse->frame_num() << ": " << endl
-		 	 << " Score 1: " << traverse->score1() << endl
-		 	 << " Score 2: " << traverse->score2() << endl;
+	//print values replaced and updated to a loop to print frame scores and game total for each player
+	for (int player = 0; player < number_of_players; player++)
+		{
+			cout << "\nPlayer " << player + 1 << endl;
+			//start at players first frame, iterate through,and print each value
+			Bowling_Frame* traverse = players[player];
+			while(traverse != nullptr)
+			{
+				cout << "Frame " << traverse->frame_num() << ": " << endl
+					<< " Score 1: " << traverse->score1() << endl
+					<< " Score 2: " << traverse->score2() << endl
+					<< " Frame total: " << traverse->frame_score() << endl;
 
 		traverse = traverse->next_frame();
 	}
-
+			//calculator to get game total
+		cout << "Total score: " << current_game_total(players[player]) << endl;
 }
