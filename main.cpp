@@ -85,4 +85,23 @@ int main(int argc, char* argv[]) //argc # of items in command include prgram nam
 	}
 			//calculator to get game total
 		cout << "Total score: " << current_game_total(players[player]) << endl;
+	}
+	//cleanup and delete the frames allocated for players
+	for (int player = 0; player < number_of_players; player++)
+	{
+		Bowling_Frame* current = players[player];
+		while (current != nullptr)
+		{
+			//save next frame before deleting current one
+			Bowling_Frame* next = current->next_frame();
+			//disconnect neighbors because of starter desctructor and attempt to free next and previous pointers
+			current->next_frame(nullptr);
+			current->prev_frame(nullptr);
+			delete current;
+			current = next;
+		}
+	}
+	//delete array of player pointers
+	delete[] players;
+	return 0;
 }
