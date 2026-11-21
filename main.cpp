@@ -1,6 +1,7 @@
 #include <iostream>
 #include "bowling_frame.h"
 #include <random>
+#include <cstdlib> // make player-count argument to integer
 
 using namespace std;
 
@@ -20,8 +21,26 @@ int current_game_total(Bowling_Frame * first_frame)
 	return game_total;	
 }
 
-int main()
+int main(int argc, char* argv[]) //argc # of items in command include prgram name, argv array containing items text
 {
+	//require one command-line argument for # players
+	if (argc != 2)
+	{
+		cout << "Usage: " << argv[0] << " <number of players>" << endl;
+		retun 1;
+	}
+	//atoi converts text to integer (ASCII to Integer)
+	int number_of_players = atoi(argv[1]);
+
+	//ensure at least one player
+	if (number_of_players <= 0)
+	{
+		cout << "The number of players must be greater than zero." << endl;
+		return 1;
+	}
+	//store first frame of each players list
+	Bowling_Frame** players = new Bowling_Frame*[numbe_of_players];
+	
 	//make frames
 	Bowling_Frame * f1 = new Bowling_Frame(1);
 	Bowling_Frame * f2 = new Bowling_Frame(2);
