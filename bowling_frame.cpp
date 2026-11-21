@@ -40,6 +40,9 @@ void Bowling_Frame::score1( int score )	{ score1_ = score; }
 int Bowling_Frame::score2()				{ return score2_; }
 void Bowling_Frame::score2( int score )	{ score2_ = score; }
 
+//Butterfield added to get 3rd roll for final frame
+int Bowling_Frame::score3()				{return score3_;}
+
 bool Bowling_Frame::strike() 			{ return strike_; }
 void Bowling_Frame::strike(bool value )	{ strike_ = value; }
 
